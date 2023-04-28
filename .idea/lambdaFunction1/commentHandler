@@ -1,0 +1,47 @@
+const AWS = require('aws-sdk');
+const querystring = require('querystring');
+
+// Set the region where your DynamoDB table is located
+AWS.config.update({region: 'eu-west-1'});
+
+// Create a new instance of the DynamoDB Document Client
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+exports.handler = async (event) => {
+
+ const {nickname, email, comment} = JSON.parse(JSON.stringify(event.body));
+
+  // Generate a unique ID for the item
+  const id = AWS.util.uuid.v4();
+
+  // Get the current date in ISO format
+  const date = new Date().toISOString();
+
+  // Define the item to be inserted into the DynamoDB table
+  const params = {
+    TableName: 'comments',
+    Item: {
+      id,
+      nickname,
+      email,
+      comment,
+      date
+    }
+  };
+
+  // Insert the item into the DynamoDB table
+try {
+  await docClient.put(params).promise();
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'Comment added successfully.' })
+  };
+} catch (error) {
+  console.error(error);
+  return {
+    statusCode: 500,
+    body: `{"message":"Error inserting comment into DynamoDB table. Error: ${error.message.replace(/"/g, '\\"')}"}`,
+  };
+}
+
+};

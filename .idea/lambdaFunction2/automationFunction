@@ -1,0 +1,95 @@
+const AWS = require('aws-sdk');
+AWS.config.update({region:"eu-west-1"});
+const ses = new AWS.SES();
+const fs = require('fs');
+const path = require("path");
+
+const dynamodb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
+
+const tableName = 'daily-chapters';
+const partitionKeyName = 'fileName';
+const sortKeyName = 'date_sent';
+const sentDateAttributeName = 'sent_date';
+
+const today = new Date().toLocaleString('default', { month: 'long' }) + " " + new Date().getDate();
+
+exports.handler = async (event) => {
+const fileNames = fs.readdirSync('html', 'utf8');
+ let date1 = new Date();
+let date2 = new Date("5/22/2023");
+
+if (date1 > date2) {
+  const fileNames = fs.readdirSync('thegreatgatsby.epub', 'utf8');;
+} else if (date1 < date2) {
+  const fileNames = fs.readdirSync('html', 'utf8');
+} else {
+  const fileNames = fs.readdirSync('html', 'utf8');
+}
+
+
+  const todaysDate = new Date().toISOString().slice(0, 10);
+  const currentDate = new Date().getTime().toString();
+
+  // Get the last sent file name and date from the DynamoDB table
+  const lastSent = await dynamodb
+    .getItem({
+      TableName: tableName,
+      Key: {
+        [partitionKeyName]: { S: fileNames[0] },
+        [sortKeyName]: { N: '0' },
+      },
+    })
+    .promise();
+
+  // If there is no last sent record, use the first file in the folder
+  const nextFileName = lastSent.Item
+    ? fileNames[(fileNames.indexOf(lastSent.Item[partitionKeyName].S) + 1) % fileNames.length]
+    : fileNames[0];
+
+  // Update the date sent for the next file in the DynamoDB table
+  await dynamodb
+    .updateItem({
+      TableName: tableName,
+      Key: {
+        [partitionKeyName]: { S: nextFileName },
+        [sortKeyName]: { N: currentDate },
+      },
+      UpdateExpression: 'SET #sent_date = :currentDate',
+      ExpressionAttributeNames: { '#sent_date': sentDateAttributeName },
+      ExpressionAttributeValues: { ':currentDate': { S: todaysDate } },
+    })
+    .promise();
+
+  // Read the HTML file and return it as the response
+
+  const htmlPath = path.join(__dirname, 'html', nextFileName);
+  const html = fs.readFileSync(htmlPath, 'utf-8');
+
+  try {
+    const cleanData = html.replace(/<img[^>]*>/g, "");
+    const params = {
+      Destination: {
+        ToAddresses: ["zeyneptunaakbiyik@gmail.com", "zeyneptunaakbiyik@hotmail.com"]
+      },
+      Message: {
+        Subject: { Data: "Today's Chapter Is... | " + today},
+        Body: { Html: { Data: cleanData + "<br><br><a href='http://todayschapteris.netlify.app/comments.html'>Join the discussion! Visit website for more...</a>", Charset: 'UTF-8' } }
+      },
+      Source: "todayschapteris@gmail.com"
+    };
+    return new Promise((resolve, reject) => {
+      ses.sendEmail(params, (err, html) => {
+        if (err) {
+          console.log(err, err.stack);
+          reject(err);
+        } else {
+          console.log(html);
+          resolve(html);
+        }
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Alice In Wonderland | Today's Chapter Is...</title>
+    <meta property="og:title" content="comments - Landing Page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.103.0.min.js"></script>
+    <script>console.log(localStorage.getItem("username"))</script>
+    <style>
+        /* Style for the comment boxes */
+        .comment-box {
+            display: inline-block;
+            width: 30%;
+            margin: 10px;
+            vertical-align: top;
+
+            flex-direction: column;
+            padding: var(--dl-space-space-doubleunit) var(--dl-space-space-tripleunit);
+            justify-content: center;
+            background-color: var(--dl-color-gray-900);
+        }
+    </style>
+
+    <style data-tag="reset-style-sheet">
+        html {
+            line-height: 1.15;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            border-width: 0;
+            border-style: solid;
+        }
+
+        p,
+        li,
+        ul,
+        pre,
+        div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        figure,
+        blockquote,
+        figcaption {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            background-color: transparent;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 100%;
+            line-height: 1.15;
+            margin: 0;
+        }
+
+        button,
+        select {
+            text-transform: none;
+        }
+
+        button,
+        [type="button"],
+        [type="reset"],
+        [type="submit"] {
+            -webkit-appearance: button;
+        }
+
+        button::-moz-focus-inner,
+        [type="button"]::-moz-focus-inner,
+        [type="reset"]::-moz-focus-inner,
+        [type="submit"]::-moz-focus-inner {
+            border-style: none;
+            padding: 0;
+        }
+
+        button:-moz-focus,
+        [type="button"]:-moz-focus,
+        [type="reset"]:-moz-focus,
+        [type="submit"]:-moz-focus {
+            outline: 1px dotted ButtonText;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        input {
+            padding: 2px 4px;
+        }
+
+        img {
+            display: block;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+    </style>
+    <style data-tag="default-style-sheet">
+        html {
+            font-family: Raleway;
+            font-size: 18px;
+        }
+
+        body {
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            text-transform: none;
+            letter-spacing: normal;
+            line-height: 1.55;
+            color: var(--dl-color-gray-black);
+            background-color: var(--dl-color-gray-white);
+
+        }
+    </style>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+        data-tag="font" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+        data-tag="font" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+        data-tag="font" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <div>
+        <link href="./book1.css" rel="stylesheet" />
+
+        <div class="comments-container">
+            <div data-role="Header" class="comments-navbar-container">
+                <div class="comments-navbar">
+                    <div class="comments-left-side">
+                        <div data-role="BurgerMenu" class="comments-burger-menu">
+                            <svg viewBox="0 0 1024 1024" class="comments-icon">
+                                <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="comments-links-container">
+                            <a href="index.html" class="comments-link">
+                                Today's Chapter Is...
+                            </a>
+                        </div>
+                    </div>
+                    <div class="comments-links-container1">
+                        <a href="books.html" class="comments-link3 Anchor">
+                            Browse Books
+                        </a>
+                    </div>
+                    <div class="comments-right-side">
+                        <a href="user.html" class="books-cta-btn button Anchor">
+                            <span id="header_username"></span>
+                        </a>
+                        <!-- <a onclick="tokenFunction()"> token </a> -->
+                        <a href="https://todayschapteris.auth.eu-west-1.amazoncognito.com/logout?client_id=6e91nog3vslqsl1ld5t26bufjj&response_type=code&scope=email+openid&logout_uri=https%3A%2F%2Ftodayschapteris.netlify.app&redirect_uri=https%3A%2F%2Ftodayschapteris.netlify.app"
+                            class="books-cta-btn button Anchor">
+                            Log Out
+                        </a>
+                    </div>
+                    <div data-role="MobileMenu" class="comments-mobile-menu">
+                        <div class="comments-container1">
+                            <img alt="image" src="https://play.teleporthq.io/static/svg/default-img.svg"
+                                class="comments-image" />
+                            <div data-role="CloseMobileMenu" class="comments-close-menu">
+                                <svg viewBox="0 0 1024 1024" class="comments-icon2">
+                                    <path
+                                        d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-info">
+                <div class="books-hero-text">
+                    <h1 class="books-heading">Alice In Wonderland</h1>
+                </div>
+                <img src="alice.jpeg" alt="Book Image" class="book-pic" height="300">
+                <p class="book-text">Telling the tale of a girl named Alice who falls down a rabbit hole into a fantasy
+                    world populated by surreal and anthropomorphic creatures, the book was a huge commercial success on
+                    its initial publication in 1865.</p>
+                <p class="book-text">Subscribe now to get this book in your inbox chapter by chapter
+                    every
+                    day!</p>
+
+
+                <button type="submit" id="signup-submit-button" class="signup-cta-btn Anchor"
+                    onclick=handleSignupSubmit()>Subscribe
+                </button>
+                <p id="hiddenText">Thanks for subscribing!</p>
+
+                <button type="submit" id="unsubscribe-button" class="signup-cta-btn Anchor"
+                    onclick=handleUnsubscribe()>Unsubscribe
+                </button>
+                <p id="unsubscribeMessage">Unsubscribed</p>
+            </div>
+
+
+            <div class="comments-get-in-touch">
+                <div class="comments-form-container">
+                    <span class="comments-heading1 BigCard-Heading">Add A Comment</span>
+                    <form id="comment-form" onsubmit="handleSubmit(event)">
+
+                        <label for="comment-input"></label><textarea id="comment-input" name="comment"
+                            placeholder="What do you think about this book?"
+                            class="comments-message textarea"></textarea>
+
+                        <button type="submit" id="submit-button" class="comments-cta-btn Anchor"
+                            onclick=handleSubmit()>Submit
+
+                        </button>
+                    </form>
+
+                    <script>
+                        //HANDLES SINGUP SUBMIT BUTTON
+                        async function handleSignupSubmit() {
+                            console.log('handleSignupSubmit function called');
+                            event.preventDefault();
+                            var hiddenText = document.getElementById("hiddenText");
+
+                            // Get email and webpage info from the form
+                            const email = localStorage.getItem("email");
+                            console.log('email: ' + email);
+                            const webpage = "alice"; // Replace with the appropriate webpage identifier
+
+                            // Create a payload object that includes email and webpage
+                            const payload = {
+                                email: email,
+                                webpage: webpage,
+                            };
+
+                            try {
+                                const response = await fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod/bookSignup', {
+                                    mode: 'no-cors',
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(payload),
+                                });
+                                console.log('Data was successfully sent to the server');
+                                hiddenText.style.display = "block";
+
+                            } catch (error) {
+                                console.error(error.message);
+                            }
+                        }
+
+                        async function handleUnsubscribe() {
+                            console.log('handleUnsubscribe function called');
+                            event.preventDefault();
+                            var hiddenText = document.getElementById("unsubscribeMessage");
+
+                            // Get email and webpage info from the form
+                            const email = localStorage.getItem("email");
+                            const webpage = "alice"; // Replace with the appropriate webpage identifier
+
+                            // Create a payload object that includes email and webpage
+                            const payload = {
+                                email: email,
+                                webpage: webpage,
+                            };
+                            console.log(payload);
+
+                            try {
+                                const response = await fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod/unsubscribe', {
+                                    mode: 'no-cors',
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(payload),
+                                });
+
+
+                                console.log('UNSUBSCRIBED');
+                                hiddenText.style.display = "block";
+
+                            } catch (error) {
+                                console.error(error.message);
+                            }
+                        }
+
+                        AWS.config.update({
+                            accessKeyId: 'AKIAWM5XQWSVDVHHQP65',
+                            secretAccessKey: '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',
+                            region: 'eu-west-1'
+                        });
+
+                        const lambda = new AWS.Lambda();
+
+                        //HANDLES COMMENT SUBMIT BUTTON
+                        async function handleSubmit() {
+                            console.log('handleSubmit function called'); // Add this line
+                            event.preventDefault();
+
+                            const payload = {
+                                nickname: localStorage.getItem("username"),
+                                email: localStorage.getItem("email"),
+                                comment: document.getElementById('comment-input').value,
+                                bookname: "alice"
+                            };
+
+                            try {
+                                const response = await fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod/myresource', {
+                                    mode: 'no-cors',
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(payload)
+                                });
+
+                                console.log('Data was successfully sent to the server');
+                                location.reload();
+                            } catch (error) {
+                                console.error(error.message);
+                            }
+                        }
+                    </script>
+
+                </div>
+
+
+            </div>
+            <div class="comments-section-separator"></div>
+            <div id="comments-container">
+
+                <script src="https://sdk.amazonaws.com/js/aws-sdk-2.976.0.min.js"></script>
+                <script>
+                    // Create a new DynamoDB object
+                    const dynamodb = new AWS.DynamoDB({
+                        accessKeyId: 'AKIAWM5XQWSVDVHHQP65',
+                        secretAccessKey: '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',
+                        region: 'eu-west-1'
+                    });
+
+                    // Retrieve all items from the table and display them as comment boxes
+                    dynamodb.scan({
+                        TableName: "comments",
+                        ProjectionExpression: "nickname, #date, #cm, bookname",
+                        ExpressionAttributeNames: {
+                            "#date": "date",
+                            "#cm": "comment",
+                            // "#bookname": "bookname"
+                        }
+
+                    }, function (err, data) {
+                        if (err) {
+                            console.log(err, err.stack);
+                            console.log(data);
+                        } else {
+                            const bookname = document.createElement("p");
+                            const commentsContainer = document.getElementById("comments-container");
+
+
+                            data.Items.forEach(function (item) {
+                                const bookname = item.bookname.S;
+
+                                if (bookname === "alice") {
+                                    // Create a new HTML element for the comment box
+                                    const commentBox = document.createElement("div");
+                                    commentBox.className = "comment-box";
+
+
+                                    // Add the nickname, date, and comment attributes to the comment box
+                                    const nickname = document.createElement("p");
+                                    nickname.innerText = "Nickname: " + item.nickname.S;
+                                    commentBox.appendChild(nickname);
+
+
+                                    const date = document.createElement("p");
+                                    const timestamp = item.date.S;
+                                    const dateStr = timestamp.substring(0, 10);
+                                    date.innerText = "Date: " + dateStr;
+                                    commentBox.appendChild(date);
+
+                                    const comment = document.createElement("p");
+                                    comment.innerText = "Comment: " + item.comment.S;
+                                    commentBox.appendChild(comment);
+
+                                    // const bookname = document.createElement("p");
+                                    // bookname.innerText = "book: " + item.bookname.S;
+                                    // commentBox.appendChild(bookname);
+
+                                    // Add the comment box to the comments container
+                                    commentsContainer.appendChild(commentBox);
+
+                                }
+                            });
+                        }
+                    });
+                </script>
+            </div>
+            <div class="comments-section-separator1"></div>
+
+            <div class="comments-footer-container">
+                <div class="comments-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById("header_username").innerHTML = localStorage.getItem("username");
+</script>
+
+</html>

@@ -1,304 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <title>Comments | Today's Chapter Is...</title>
-    <meta property="og:title" content="comments - Landing Page" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="og:title" content="comments - Landing Page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8"/>
+    <meta property="twitter:card" content="summary_large_image"/>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.103.0.min.js"></script>
     <style>
-      /* Style for the comment boxes */
-      .comment-box {
-        display: inline-block;
-        width: 30%;
-        margin: 10px;
-        vertical-align: top;
+        /* Style for the comment boxes */
+        .comment-box {
+            display: inline-block;
+            width: 30%;
+            margin: 10px;
+            vertical-align: top;
 
-        flex-direction: column;
-        padding: var(--dl-space-space-doubleunit) var(--dl-space-space-tripleunit);
-        justify-content: center;
-        background-color: var(--dl-color-gray-900);
-      }
+            flex-direction: column;
+            padding: var(--dl-space-space-doubleunit) var(--dl-space-space-tripleunit);
+            justify-content: center;
+            background-color: var(--dl-color-gray-900);
+        }
 
     </style>
 
     <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+        html {
+            line-height: 1.15;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            border-width: 0;
+            border-style: solid;
+        }
+
+        p, li, ul, pre, div, h1, h2, h3, h4, h5, h6, figure, blockquote, figcaption {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            background-color: transparent;
+        }
+
+        button, input, optgroup, select, textarea {
+            font-family: inherit;
+            font-size: 100%;
+            line-height: 1.15;
+            margin: 0;
+        }
+
+        button, select {
+            text-transform: none;
+        }
+
+        button, [type="button"], [type="reset"], [type="submit"] {
+            -webkit-appearance: button;
+        }
+
+        button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+            border-style: none;
+            padding: 0;
+        }
+
+        button:-moz-focus, [type="button"]:-moz-focus, [type="reset"]:-moz-focus, [type="submit"]:-moz-focus {
+            outline: 1px dotted ButtonText;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        input {
+            padding: 2px 4px;
+        }
+
+        img {
+            display: block;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
     </style>
     <style data-tag="default-style-sheet">
-      html {
-        font-family: Raleway;
-        font-size: 18px;
-      }
+        html {
+            font-family: Raleway;
+            font-size: 18px;
+        }
 
-      body {
-        font-weight: 400;
-        font-style:normal;
-        text-decoration: none;
-        text-transform: none;
-        letter-spacing: normal;
-        line-height: 1.55;
-        color: var(--dl-color-gray-black);
-        background-color: var(--dl-color-gray-white);
+        body {
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            text-transform: none;
+            letter-spacing: normal;
+            line-height: 1.55;
+            color: var(--dl-color-gray-black);
+            background-color: var(--dl-color-gray-white);
 
-      }
+        }
     </style>
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+            data-tag="font"
     />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+            data-tag="font"
     />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
-      data-tag="font"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+            data-tag="font"
     />
     <style>
-      html {
-      scroll-behavior: smooth;
-      }
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <div>
-      <link href="./comments.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+<div>
+    <link href="./comments.css" rel="stylesheet"/>
 
-      <div class="comments-container">
+    <div class="comments-container">
         <div data-role="Header" class="comments-navbar-container">
-          <div class="comments-navbar">
-            <div class="comments-left-side">
-              <div data-role="BurgerMenu" class="comments-burger-menu">
-                <svg viewBox="0 0 1024 1024" class="comments-icon">
-                  <path
-                    d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
-                  ></path>
-                </svg>
-              </div>
-              <div class="comments-links-container">
-                <a href="index.html" class="comments-link">
-                  Today's Chapter Is...
-                </a>
-              </div>
-            </div>
-            <div class="comments-links-container1">
-              <a href="index.html" class="comments-link1 Anchor">Home</a>
-              <a href="about.html" class="comments-link2 Anchor">About</a>
-              <a href="books.html" class="comments-link3 Anchor">
-                Current Book
-              </a>
-            </div>
-            <div class="comments-right-side">
-              <a href="comments.html" class="comments-cta-btn button Anchor">
-                JOIN THE DISCUSSION
-              </a>
-            </div>
-            <div data-role="MobileMenu" class="comments-mobile-menu">
-              <div class="comments-container1">
-                <img
-                  alt="image"
-                  src="https://play.teleporthq.io/static/svg/default-img.svg"
-                  class="comments-image"
-                />
-                <div data-role="CloseMobileMenu" class="comments-close-menu">
-                  <svg viewBox="0 0 1024 1024" class="comments-icon2">
-                    <path
-                      d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
-                    ></path>
-                  </svg>
+            <div class="comments-navbar">
+                <div class="comments-left-side">
+                    <div data-role="BurgerMenu" class="comments-burger-menu">
+                        <svg viewBox="0 0 1024 1024" class="comments-icon">
+                            <path
+                                    d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
+                            ></path>
+                        </svg>
+                    </div>
+                    <div class="comments-links-container">
+                        <a href="index.html" class="comments-link">
+                            Today's Chapter Is...
+                        </a>
+                    </div>
                 </div>
-              </div>
+                <div class="comments-links-container1">
+                    <a href="index.html" class="comments-link1 Anchor">Home</a>
+                    <a href="about.html" class="comments-link2 Anchor">About</a>
+                    <a href="books.html" class="comments-link3 Anchor">
+                        Books
+                    </a>
+                </div>
+                <div class="comments-right-side">
+                    <a href="books.html" class="comments-cta-btn button Anchor">
+                        START READING NOW
+                    </a>
+                </div>
+                <div data-role="MobileMenu" class="comments-mobile-menu">
+                    <div class="comments-container1">
+                        <img
+                                alt="image"
+                                src="https://play.teleporthq.io/static/svg/default-img.svg"
+                                class="comments-image"
+                        />
+                        <div data-role="CloseMobileMenu" class="comments-close-menu">
+                            <svg viewBox="0 0 1024 1024" class="comments-icon2">
+                                <path
+                                        d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
         <div class="comments-container2">
-          <span class="comments-heading BigCard-Heading">Let's Discuss!</span>
+            <span class="comments-heading BigCard-Heading">Let's Discuss!</span>
         </div>
-
 
 
         <div class="comments-get-in-touch">
-          <div class="comments-form-container">
-            <span class="comments-heading1 BigCard-Heading">Add A Comment</span>
-            <form id="comment-form" onsubmit="handleSubmit(event)">
+            <div class="comments-form-container">
+                <span class="comments-heading1 BigCard-Heading">Add A Comment</span>
+                <form id="comment-form" onsubmit="handleSubmit(event)">
 
-              <label for="nickname-input"></label><input type="text" id="nickname-input" name="nickname" class="comments-name input" placeholder="Nickname">
-
-
-              <label for="email-input"></label><input type="email" id="email-input" name="email" class="comments-email input" placeholder="E-mail address">
+                    <label for="nickname-input"></label><input type="text" id="nickname-input" name="nickname"
+                                                               class="comments-name input" placeholder="Nickname">
 
 
-              <label for="comment-input"></label><textarea id="comment-input" name="comment" placeholder="What do you think about the book?"
-                                                           class="comments-message textarea"></textarea>
+                    <label for="email-input"></label><input type="email" id="email-input" name="email"
+                                                            class="comments-email input" placeholder="E-mail address">
 
-              <button type="submit" id="submit-button" class="comments-cta-btn1 Anchor button" onclick="console.log('Submit button clicked')">Submit</button>
-            </form>
 
-            <script>
-              AWS.config.update({
-                accessKeyId: 'AKIAWM5XQWSVDVHHQP65',
-                secretAccessKey: '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',
-                region: 'eu-west-1'
-              });
+                    <label for="comment-input"></label><textarea id="comment-input" name="comment"
+                                                                 placeholder="What do you think about the book?"
+                                                                 class="comments-message textarea"></textarea>
 
-              const lambda = new AWS.Lambda();
 
-              function handleSubmit(event) {
-                event.preventDefault();
+                    <button type="submit" id="submit-button" class="comments-cta-btn Anchor"
+                            onclick=handleSubmit()>Submit
+                    </button>
+                </form>
 
-                const payload = {
-                  nickname: document.getElementById('nickname-input').value,
-                  email: document.getElementById('email-input').value,
-                  comment: document.getElementById('comment-input').value
-                };
+                <script>
+                    AWS.config.update({
+                        accessKeyId: 'AKIAWM5XQWSVDVHHQP65',
+                        secretAccessKey: '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',
+                        region: 'eu-west-1'
+                    });
 
-                const params = {
-                  FunctionName: 'handleComments',
-                  InvocationType: 'RequestResponse',
-                  Payload: JSON.stringify(payload)
-                };
+                    const lambda = new AWS.Lambda();
 
-                lambda.invoke(params, function(err, data) {
-                  if (err) {
-                    console.log(err, err.stack);
-                  } else {
-                    console.log(data);
-                  }
-                });
-              }
-            </script>
+                    async function handleSubmit() {
+                        event.preventDefault();
 
-            <!--- <script>
-               const form = document.querySelector('form');
+                        const payload = {
+                            nickname: document.getElementById('nickname-input').value,
+                            email: document.getElementById('email-input').value,
+                            comment: document.getElementById('comment-input').value
+                        };
 
-               form.addEventListener('submit', async (event) => {
-                 event.preventDefault(); // prevent the form from submitting normally
+                        const params = {
 
-                 // get the input values from the form
-                 const nickname = document.querySelector('#nickname-input').value;
-                 const email = document.querySelector('#email-input').value;
-                 const comment = document.querySelector('#comment-input').value;
+                            FunctionName: 'handleComments',
+                            InvocationType: 'RequestResponse',
+                            Payload: JSON.stringify(payload)
+                        };
 
-                 const formData = new FormData(event.target);
-                 const data = {
-                   nickname: formData.get('nickname'),
-                   email: formData.get('email'),
-                   comment: formData.get('comment')
-                 };
+                        try {
+                            const response = await fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod/myresource', {
+                                mode: 'no-cors',
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(payload)
+                            });
 
-                 try {
-                   const response = await fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod', {
-                     mode: 'no-cors',
-                     method: 'POST',
-                     headers: {
-                       'Content-Type': 'application/json'
-                     },
-                     body: JSON.stringify(data)
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+
+                            console.log('Data was successfully sent to the server');
+                        } catch (error) {
+                            console.error(error.message);
+                        }
+
+                        /*
+                                                lambda.invoke(params, function (err, data) {
+                                                    if (err) {
+                                                        console.log(err, err.stack);
+                                                    } else {
+                                                        console.log(data);
+                                                    }
+                                                }
+
+                                                );*/
+                    }
+                </script>
+
+                <!--- <script>
+                   const form = document.querySelector('form');
+
+                   form.addEventListener('submit', async (event) => {
+                     event.preventDefault(); // prevent the form from submitting normally
+
+                     // get the input values from the form
+                     const nickname = document.querySelector('#nickname-input').value;
+                     const email = document.querySelector('#email-input').value;
+                     const comment = document.querySelector('#comment-input').value;
+
+                     const formData = new FormData(event.target);
+                     const data = {
+                       nickname: formData.get('nickname'),
+                       email: formData.get('email'),
+                       comment: formData.get('comment')
+                     };
+
+                     try {
+                       const response = await fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod', {
+                         mode: 'no-cors',
+                         method: 'POST',
+                         headers: {
+                           'Content-Type': 'application/json'
+                         },
+                         body: JSON.stringify(data)
+                       });
+
+                       if (!response.ok) {
+                         throw new Error('Network response was not ok');
+                       }
+
+                       console.log('Data was successfully sent to the server');
+                     } catch (error) {
+                       console.error(error.message);
+                     }
+
+                     /*
+                                     // use fetch to send a POST request to the API endpoint
+                                     fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod', {
+                                       method: 'POST',
+                                       body: JSON.stringify(data)
+                                     })
+                                             .then(response => {
+                                               if (!response.ok) {
+                                                 throw new Error('Network response was not ok');
+                                               }
+                                               return response.json();
+                                             })
+                                             .then(data => console.log(data))
+                                             .catch(error => console.error(error)); */
                    });
 
-                   if (!response.ok) {
-                     throw new Error('Network response was not ok');
-                   }
+                 </script> --->
 
-                   console.log('Data was successfully sent to the server');
-                 } catch (error) {
-                   console.error(error.message);
-                 }
+            </div>
 
-                 /*
-                                 // use fetch to send a POST request to the API endpoint
-                                 fetch('https://ccmrp7y8r3.execute-api.eu-west-1.amazonaws.com/prod', {
-                                   method: 'POST',
-                                   body: JSON.stringify(data)
-                                 })
-                                         .then(response => {
-                                           if (!response.ok) {
-                                             throw new Error('Network response was not ok');
-                                           }
-                                           return response.json();
-                                         })
-                                         .then(data => console.log(data))
-                                         .catch(error => console.error(error)); */
-               });
-
-             </script> --->
 
         </div>
-
-
-      </div>
         <div class="comments-section-separator"></div>
         <div id="comments-container">
 
-          <script src="https://sdk.amazonaws.com/js/aws-sdk-2.976.0.min.js"></script>
-          <script>
-            // Create a new DynamoDB object
-            const dynamodb = new AWS.DynamoDB({
-              accessKeyId: 'AKIAWM5XQWSVDVHHQP65',
-              secretAccessKey: '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',
-              region: 'eu-west-1'
-            });
-
-            // Retrieve all items from the table and display them as comment boxes
-            dynamodb.scan({
-              TableName: "comments",
-              ProjectionExpression: "nickname, #date, #cm",
-              ExpressionAttributeNames: {
-                "#date": "date",
-                "#cm": "comment"
-              }
-
-            }, function(err, data) {
-              if (err) {
-                console.log(err, err.stack);
-                console.log(data);
-              } else {
-                const commentsContainer = document.getElementById("comments-container");
-
-                data.Items.forEach(function(item) {
-                  // Create a new HTML element for the comment box
-                  const commentBox = document.createElement("div");
-                  commentBox.className = "comment-box";
-
-                  // Add the nickname, date, and comment attributes to the comment box
-                  const nickname = document.createElement("p");
-                  nickname.innerText = "Nickname: " + item.nickname.S;
-                  commentBox.appendChild(nickname);
-
-                  const date = document.createElement("p");
-                  const timestamp = item.date.S;
-                  const dateStr = timestamp.substring(0, 10);
-                  date.innerText = "Date: " + dateStr;
-                  commentBox.appendChild(date);
-
-                  const comment = document.createElement("p");
-                  comment.innerText = "Comment: " + item.comment.S;
-                  commentBox.appendChild(comment);
-
-                  // Add the comment box to the comments container
-                  commentsContainer.appendChild(commentBox);
+            <script src="https://sdk.amazonaws.com/js/aws-sdk-2.976.0.min.js"></script>
+            <script>
+                // Create a new DynamoDB object
+                const dynamodb = new AWS.DynamoDB({
+                    accessKeyId: 'AKIAWM5XQWSVDVHHQP65',
+                    secretAccessKey: '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',
+                    region: 'eu-west-1'
                 });
-              }
-            });
-          </script>
+
+                // Retrieve all items from the table and display them as comment boxes
+                dynamodb.scan({
+                    TableName: "comments",
+                    ProjectionExpression: "nickname, #date, #cm",
+                    ExpressionAttributeNames: {
+                        "#date": "date",
+                        "#cm": "comment"
+                    }
+
+                }, function (err, data) {
+                    if (err) {
+                        console.log(err, err.stack);
+                        console.log(data);
+                    } else {
+                        const commentsContainer = document.getElementById("comments-container");
+
+                        data.Items.forEach(function (item) {
+                            // Create a new HTML element for the comment box
+                            const commentBox = document.createElement("div");
+                            commentBox.className = "comment-box";
+
+                            // Add the nickname, date, and comment attributes to the comment box
+                            const nickname = document.createElement("p");
+                            nickname.innerText = "Nickname: " + item.nickname.S;
+                            commentBox.appendChild(nickname);
+
+                            const date = document.createElement("p");
+                            const timestamp = item.date.S;
+                            const dateStr = timestamp.substring(0, 10);
+                            date.innerText = "Date: " + dateStr;
+                            commentBox.appendChild(date);
+
+                            const comment = document.createElement("p");
+                            comment.innerText = "Comment: " + item.comment.S;
+                            commentBox.appendChild(comment);
+
+                            // Add the comment box to the comments container
+                            commentsContainer.appendChild(commentBox);
+                        });
+                    }
+                });
+            </script>
         </div>
         <div class="comments-section-separator1"></div>
 
         <div class="comments-footer-container">
-          <div class="comments-footer">
-            <div class="comments-social-links"></div>
-            <div class="comments-copyright-container">
-              <span class="Anchor">Zeynep Tuna AKBIYIK, 2023</span>
+            <div class="comments-footer">
+                <div class="comments-social-links"></div>
+                <div class="comments-copyright-container">
+                    <span class="Anchor">Zeynep Tuna AKBIYIK, 2023</span>
+                </div>
             </div>
-          </div>
         </div>
     </div>
-    </div>
-  </body>
+</div>
+</body>
 </html>
